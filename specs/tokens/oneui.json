@@ -1,0 +1,47 @@
+{
+  "skin": "oneui",
+  "specRefs": ["SC-OU-001", "SC-OU-003"],
+  "color": {
+    "accent": "#7D97FFFF",
+    "accentOn": "#10142EFF",
+    "surfaceGlass": "#0F1116D1",
+    "textPrimary": "#F4F5F8FF",
+    "textSecondary": "#F4F5F8B3",
+    "tileInactiveFill": "#FFFFFF26",
+    "tileInactiveIcon": "#ECEEF5FF",
+    "scrim": "#00000080"
+  },
+  "shape": {
+    "panelCornerDp": 30,
+    "tileCornerDp": 26,
+    "cardCornerDp": 26,
+    "sliderCornerDp": 26
+  },
+  "layout": {
+    "columns": 3,
+    "tileSizeDp": 52,
+    "tileGapDp": 20,
+    "tileIconDp": 22,
+    "tilesAreCircles": true,
+    "tileLabel": true,
+    "tileGlow": false
+  },
+  "panel": {
+    "expandMode": "single-stage",
+    "compactStop": 0.45,
+    "fullThreshold": 0.55,
+    "openThreshold": 0.32,
+    "edgeInsetDp": 0,
+    "statusBarVisible": false,
+    "lightBleed": false,
+    "contentAnchor": "bottom"
+  },
+  "motion": {
+    "type": "tween",
+    "damping": 1.0,
+    "stiffness": 380,
+    "durationMs": 260,
+    "easing": "cubic-bezier(0.33, 1, 0.68, 1)",
+    "overshootAllowed": false
+  }
+}

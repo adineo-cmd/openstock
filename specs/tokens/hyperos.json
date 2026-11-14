@@ -1,0 +1,46 @@
+{
+  "skin": "hyperos",
+  "specRefs": ["SC-HX-001", "SC-HX-003"],
+  "color": {
+    "accent": "#3FD0E8FF",
+    "accentOn": "#06272EFF",
+    "surfaceGlass": "#101418B8",
+    "textPrimary": "#F2F5F7FF",
+    "textSecondary": "#F2F5F7B3",
+    "tileInactiveFill": "#FFFFFF1F",
+    "tileInactiveIcon": "#E8EDF0FF",
+    "scrim": "#00000066"
+  },
+  "shape": {
+    "panelCornerDp": 28,
+    "tileCornerDp": 16,
+    "cardCornerDp": 20,
+    "sliderCornerDp": 22
+  },
+  "layout": {
+    "columns": 4,
+    "tileSizeDp": 64,
+    "tileGapDp": 12,
+    "tileIconDp": 24,
+    "tilesAreCircles": false,
+    "tileLabel": false,
+    "tileGlow": false
+  },
+  "panel": {
+    "expandMode": "two-stage",
+    "compactStop": 0.45,
+    "fullThreshold": 0.55,
+    "openThreshold": 0.3,
+    "edgeInsetDp": 12,
+    "statusBarVisible": true,
+    "lightBleed": false,
+    "contentAnchor": "top"
+  },
+  "motion": {
+    "type": "spring",
+    "damping": 0.82,
+    "stiffness": 380,
+    "durationMs": 300,
+    "overshootAllowed": true
+  }
+}

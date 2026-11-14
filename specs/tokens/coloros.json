@@ -1,0 +1,47 @@
+{
+  "skin": "coloros",
+  "specRefs": ["SC-CO-001", "SC-CO-003"],
+  "color": {
+    "accent": "#2FD593FF",
+    "accentOn": "#04241AFF",
+    "surfaceGlass": "#141614A8",
+    "textPrimary": "#F3F6F4FF",
+    "textSecondary": "#F3F6F4B3",
+    "tileInactiveFill": "#FFFFFF22",
+    "tileInactiveIcon": "#E9EFECFF",
+    "scrim": "#00000059"
+  },
+  "shape": {
+    "panelCornerDp": 32,
+    "tileCornerDp": 28,
+    "cardCornerDp": 24,
+    "sliderCornerDp": 24
+  },
+  "layout": {
+    "columns": 4,
+    "tileSizeDp": 56,
+    "tileGapDp": 16,
+    "tileIconDp": 22,
+    "tilesAreCircles": true,
+    "tileLabel": false,
+    "tileGlow": true
+  },
+  "panel": {
+    "expandMode": "single-stage",
+    "compactStop": 0.45,
+    "fullThreshold": 0.55,
+    "openThreshold": 0.32,
+    "edgeInsetDp": 0,
+    "statusBarVisible": false,
+    "lightBleed": true,
+    "contentAnchor": "top"
+  },
+  "motion": {
+    "type": "tween",
+    "damping": 1.0,
+    "stiffness": 380,
+    "durationMs": 320,
+    "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+    "overshootAllowed": false
+  }
+}
