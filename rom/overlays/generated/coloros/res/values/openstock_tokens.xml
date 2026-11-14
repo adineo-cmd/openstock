@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="os_color_accent">#FF2FD593</color>
+    <color name="os_color_accent_on">#FF04241A</color>
+    <color name="os_color_surface_glass">#A8141614</color>
+    <color name="os_color_text_primary">#FFF3F6F4</color>
+    <color name="os_color_text_secondary">#B3F3F6F4</color>
+    <color name="os_color_tile_inactive_fill">#22FFFFFF</color>
+    <color name="os_color_tile_inactive_icon">#FFE9EFEC</color>
+    <color name="os_color_scrim">#59000000</color>
+
+    <dimen name="os_shape_panel_corner_dp">32dp</dimen>
+    <dimen name="os_shape_tile_corner_dp">28dp</dimen>
+    <dimen name="os_shape_card_corner_dp">24dp</dimen>
+    <dimen name="os_shape_slider_corner_dp">24dp</dimen>
+    <dimen name="os_layout_tile_size_dp">56dp</dimen>
+    <dimen name="os_layout_tile_gap_dp">16dp</dimen>
+    <dimen name="os_layout_tile_icon_dp">22dp</dimen>
+    <dimen name="os_panel_edge_inset_dp">0dp</dimen>
+
+    <item type="fraction" name="os_panel_compact_stop">45%</item>
+    <item type="fraction" name="os_panel_full_threshold">55%</item>
+    <item type="fraction" name="os_panel_open_threshold">32%</item>
+
+    <bool name="os_layout_tiles_are_circles">true</bool>
+    <bool name="os_layout_tile_label">false</bool>
+    <bool name="os_layout_tile_glow">true</bool>
+    <bool name="os_panel_status_bar_visible">false</bool>
+    <bool name="os_panel_light_bleed">true</bool>
+    <bool name="os_motion_overshoot_allowed">false</bool>
+
+    <string name="os_skin">coloros</string>
+    <integer name="os_layout_columns">4</integer>
+    <string name="os_panel_expand_mode">single-stage</string>
+    <string name="os_panel_content_anchor">top</string>
+    <string name="os_motion_type">tween</string>
+    <integer name="os_motion_stiffness">380</integer>
+    <integer name="os_motion_duration_ms">320</integer>
+    <string name="os_motion_easing">cubic-bezier(0.22, 1, 0.36, 1)</string>
+</resources>

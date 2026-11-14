@@ -1,0 +1,48 @@
+name: openstock-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Legal gate — forbid decompiled-output markers (LEGAL.md)
+        run: |
+          if grep -rInE "(jadx|JadxDecompiler|smali_classes|\.odex|apktool\.yml)" \
+              --include="*.kt" --include="*.java" --include="*.json" . ; then
+            echo "::error::Possible decompiled output committed — see LEGAL.md"
+            exit 1
+          fi
+
+      - name: Token schema + cross-spec consistency
+        run: python3 -I tools/tokens-check.py
+
+      - name: Spec coverage badge must be fresh
+        run: python3 -I tools/coverage.py --check
+
+      - name: Skin diff reports must be fresh
+        run: |
+          for f in docs/diffs/*.md; do
+            a=$(basename "$f" .md | cut -d- -f1)
+            b=$(basename "$f" .md | sed 's/.*-vs-//')
+            python3 -I tools/skindiff.py "$a" "$b" --check "$f"
+          done
+
+      - name: Generated RRO resources must be fresh
+        run: python3 -I tools/gen-rro.py --check
+
+      - name: Spec-citation gate — skins must cite spec IDs
+        run: |
+          missing=0
+          for f in app/app/src/main/java/com/openstock/launcher/skins/*.kt; do
+            grep -q "SC-" "$f" || { echo "::error::$f cites no spec ID"; missing=1; }
+          done
+          exit $missing
