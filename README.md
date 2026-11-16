@@ -1,144 +1,123 @@
+<div align="center">
+
 # OpenStock
 
 **One open Android experience that speaks every stock OS.**
 
-![spec coverage](docs/coverage.svg)
+![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white) ![Jetpack Compose](https://img.shields.io/badge/Compose-4285F4?logo=jetpackcompose&logoColor=white) ![Android](https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white) ![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white) ![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)
 
-OpenStock is a clean-room, open-source (Apache-2.0) reimplementation of the *signature UX*
-of the major Android stock operating systems — Xiaomi **HyperOS**, OPPO/OnePlus **ColorOS**,
-**realme UI**, and Samsung **One UI** — built with **100% original code and assets** on top of AOSP.
+[![Stars](https://img.shields.io/github/stars/adineo-cmd/openstock?style=flat&logo=github&label=stars)](https://github.com/adineo-cmd/openstock/stargazers) [![Last commit](https://img.shields.io/github/last-commit/adineo-cmd/openstock?style=flat)](https://github.com/adineo-cmd/openstock/commits)
 
-> ⚠️ **Read [LEGAL.md](LEGAL.md) first.** This project contains **zero** code, assets,
-> or decompiled output from any proprietary ROM. Specs are derived from *observable
-> behavior* only. See [docs/methodology.md](docs/methodology.md).
+[Quick start](#quick-start) · [How it works](#how-it-works) · [Features](#features)
 
-## Why
+</div>
 
-Every year, millions of people love features that are trapped inside one vendor's skin:
-HyperOS's glass Control Center, ColorOS's luminous Quick Settings and Smart Sidebar,
-One UI's reachability-first layouts and Now Bar. None of it is portable, none of it is open,
-and porting decompiled firmware is both illegal and unmaintainable.
+---
 
-OpenStock takes the only path that scales and survives: **spec-first clean-room engineering.**
+A clean-room reimplementation of the signature UX of the major Android skins —
+Xiaomi **HyperOS**, OPPO/OnePlus **ColorOS**, realme UI and Samsung **One UI** —
+built with original Kotlin and original assets on top of AOSP.
 
-1. **Observe** — document what a stock OS *does* (layouts, timings, curves, gestures) from
-   using a device, never from its code.
-2. **Spec** — write implementation-ready specs in [`specs/`](specs/) with a
-   [standard template](specs/TEMPLATE.md).
-3. **Reimplement** — build it with original Kotlin/AOSP code and original assets.
-4. **Ship** — as a launcher/system-UI app first, and as AOSP RRO overlays + a ROM track long-term.
+**Twelve implementation-ready specs**, three token files, and a prototype
+launcher that renders all three skins from the same component set.
 
-## Fidelity policy: how close can OpenStock get?
+## Features
 
-**Everything measurable matches exactly; artwork never copies.** Timings, easing curves,
-grids, tile sizes, corner radii, motion physics — all captured as numbers in
-[`specs/tokens/*.json`](specs/tokens/) and applied verbatim. Icons, wallpapers, fonts,
-and sounds are OpenStock originals in the *style* of each skin. That is the legal
-ceiling for any open-source clone, and we push right up against it.
+| | Feature | What it does |
+| --- | --- | --- |
+| 📐 | **Spec-first** | Every surface is documented before it is built, from observable behaviour only. |
+| 🎨 | **Token parity** | Colours, radii, grids and motion curves live in `specs/tokens/*.json` and are applied verbatim. |
+| 🧩 | **AOSP-shaped** | Panels mirror upstream SystemUI structure, so app knowledge transfers to the ROM track. |
+| ✅ | **Legal and CI gates** | CI fails on decompiled-output markers, stale badges, stale diffs or ungenerated resources. |
 
-The **underlying structure** is a different matter — that part we *do* copy, because it's
-Apache-licensed: every vendor skin is a fork of [AOSP SystemUI](docs/structure/systemui-architecture.md).
-OpenStock mirrors that architecture component-for-component (`PanelScaffold` ↔ shade/QS
-expansion, `TileState` ↔ QS tile model), so everything learned in the app transfers 1:1
-to the ROM track.
+## How it works
 
-## What makes OpenStock different
+The project takes the only path that survives a licence review:
 
-1. **One engine, N skins.** Not a launcher clone per OS — a shared panel/gesture/motion
-   engine driven by per-skin tokens. Fix a bug once, every skin benefits.
-2. **Tokens are the single source of truth.** [`specs/tokens/*.json`](specs/tokens/) feed
-   the Compose app, the web demo, and the generated RRO resources
-   (`tools/gen-rro.py`). CI validates schema (`tokens-check.py`), freshness
-   (`coverage.py --check`, `skindiff.py --check`, `gen-rro.py --check`) — drift between
-   tokens and any consumer fails the build.
-   **Prior-art check (2026-11):** the nearest existing thing is Google's
-   [Android Automotive OEM design tokens](https://source.android.com/docs/automotive/unbundled_apps/design-tokens)
-   — closed-set, vendor-facing, automotive-only. No open project combines a spec corpus,
-   a token format, and a multi-skin engine for phone OEM UX; `skindiff`, the coverage
-   badge, and the skin-pack format exist nowhere else we could find.
-3. **Spec-first with provenance.** Every number in a spec records where it was measured.
-   Unmeasured values are marked `~` — honest placeholders, not invented precision.
-4. **One live-activity primitive, three skins.** HyperIsland / Fluid Cloud / Now Bar are
-   the same idea; OpenStock implements it once (`LiveActivity` model) with per-skin placement.
-5. **Legality as a feature.** The decompiler-artifact tripwire in CI and the
-   [LEGAL.md](LEGAL.md) policy make this repo forkable, app-store-publishable, and
-   takedown-proof — which closed clones are not.
+1. **Observe** a stock OS on a device — layouts, timings, curves, gestures.
+2. **Spec** it in `specs/` using the standard template.
+3. **Implement** with original Kotlin/AOSP code and original artwork.
+4. **Ship** as a launcher first, then as RRO overlays and a ROM track.
 
-## Repository layout
+Tooling keeps the specs honest: `tokens-check.py` validates token schemas,
+`coverage.py` regenerates the coverage badge, `skindiff.py` diffs two skins, and
+`gen-rro.py` generates overlay resources.
 
-```
-openstock/
-├── docs/
-│   ├── methodology.md        # the clean-room process — REQUIRED READING for contributors
-│   ├── feature-matrix.md     # what each stock OS has, side by side
-│   ├── structure/            # AOSP SystemUI architecture (the legally-readable ancestor)
-│   ├── skin-pack-format.md   # the community skin-pack format (packs, not forks)
-│   ├── diffs/                # skindiff reports — committed, CI-checked for freshness
-│   ├── coverage.svg          # spec-coverage badge (generated)
-│   └── glossary.md
-├── specs/
-│   ├── TEMPLATE.md           # every spec uses this shape
-│   ├── tokens/               # machine-readable skin tokens — single source of truth
-│   ├── hyperos/  coloros/  oneui/
-│   └── openstock/            # SC-OS-xxx: OpenStock-original primitives (LiveActivity)
-├── tools/
-│   ├── tokens-check.py       # token validator (schema + cross-spec consistency)
-│   ├── skindiff.py           # behavioral diff between skins — unique to this project
-│   ├── coverage.py           # spec-coverage badge generator
-│   └── gen-rro.py            # tokens → Android overlay resources (ROM bridge)
-├── app/                      # OpenStock Launcher — reference implementation
-│   └── ...
-└── rom/
-    └── overlays/generated/   # per-skin RRO resources, regenerated from tokens
+```mermaid
+flowchart LR
+  A[Stock device] --> B[Observation]
+  B --> C[Spec + template]
+  C --> D[Token JSON]
+  D --> E[Compose prototype]
+  C --> F[CI gates]
+  E --> F
+  F --> G[Launcher release]
+  F --> H[RRO overlays]
+  H --> I[ROM track]
 ```
 
-*(Generic AOSP scaffolding — repo manifests, hand-written overlay examples — was
-removed deliberately; see [rom/README.md](rom/README.md).)*
+## Quick start
 
-## The prototype (`app/`)
+Android Studio with a recent Android SDK, or a local Gradle install. Python 3.12 for the tooling.
 
-OpenStock Launcher is a stand-alone Android app (no root, no framework mods) that demonstrates
-each skin's most iconic surface — the **quick-settings/control-center panel** — in three flavors:
-
-| Skin        | Panel behavior you can feel in the prototype                            |
-|-------------|-------------------------------------------------------------------------|
-| `hyperos`   | Glass tiles, two-stage pull-down, notifications inline, spring physics  |
-| `coloros`   | Centered circular toggle grid, luminous accent, sidebar edge affordance |
-| `oneui`     | Bottom-anchored panel, circular toggles, Now Bar card, big-type headers |
-
-A floating switcher lets you hot-swap skins at runtime; every skin is a pure data + composable
-implementation of its spec — no vendor assets anywhere.
-
-Build it:
+**Prototype app**
 
 ```bash
+# open stock/app in Android Studio
 cd app
-./gradlew :app:assembleDebug   # or open in Android Studio (Arctic-grade AGP, JDK 17+)
-adb install app/build/outputs/apk/debug/app-debug.apk
+# or, with a local Gradle install:
+gradle :app:assembleDebug
 ```
 
-## Status
+**Spec and token checks**
 
-| Track          | State                                                            |
-|----------------|------------------------------------------------------------------|
-| Specs          | ✅ v0.1 — HyperOS, ColorOS/realme UI, One UI + the SC-OS-001 unified LiveActivity primitive |
-| Feature matrix | ✅ v0.1 — 32 features compared across 4 skins                     |
-| Launcher proto | ✅ v0.1 — 3 skin panels, skin switcher (source complete)          |
-| Toolchain      | ✅ tokens-check · skindiff · coverage · gen-rro (all CI-enforced)  |
-| Token→RRO pipe | ✅ generated per-skin overlay resources; binding table next       |
-| GMS            | ❌ never — see [LEGAL.md](LEGAL.md)                               |
+```bash
+python3 -I tools/tokens-check.py
+python3 -I tools/coverage.py --check
+python3 -I tools/skindiff.py coloros hyperos --check docs/diffs/coloros-vs-hyperos.md
+python3 -I tools/gen-rro.py --check
+```
 
-## Contributing
+## Project structure
 
-Start with [docs/methodology.md](docs/methodology.md), then read [CONTRIBUTING.md](CONTRIBUTING.md).
-Golden rules:
+```text
+app/               Gradle root for the launcher prototype
+  app/src/main/java/com/openstock/launcher/
+    skin/           Skin interface and spec model
+    skins/          HyperOS, ColorOS, One UI implementations
+    ui/             Panel scaffold, tiles, cards, home screen
+specs/             one spec per surface, plus TEMPLATE.md
+specs/tokens/      colour, shape and motion tokens per skin
+docs/              methodology, glossary, feature matrix, diffs
+rom/overlays/      RRO overlay track
+tools/             token, coverage, diff and RRO generators
+LEGAL.md           what may and may not enter the repository
+```
 
-- **Observe, don't decompile.** Behavior from devices and public documentation only.
-- **Spec before code.** A PR that implements a feature must reference its spec ID.
-- **Original everything.** Icons, sounds, animations, fonts — all authored in this project.
+## Fidelity policy
+
+Everything measurable matches exactly. Artwork never copies.
+
+- **Copied:** timings, easing curves, grids, tile sizes, corner radii, motion
+  physics — all captured as numbers.
+- **Original:** icons, wallpapers, fonts and sounds, drawn in the *style* of each
+  skin.
+- **Copied structure:** the underlying SystemUI architecture, because every vendor
+  skin is itself a fork of Apache-licensed AOSP.
+
+That is the legal ceiling for an open-source clone, and the spec process is built
+to sit exactly on it.
+
+## What the CI enforces
+
+| Gate | Failure means |
+| --- | --- |
+| Decompiled-output scan | A `jadx`/smali artefact reached the tree |
+| Token schema + cross-spec check | Two specs disagree about the same token |
+| Coverage badge freshness | The published number no longer matches the specs |
+| Skin diff freshness | A diff report is out of date |
+| Generated RRO freshness | Committed overlays do not match their source |
 
 ## License
 
-Apache-2.0 for all code and specs. See [LICENSE](LICENSE).
-All product names (HyperOS, ColorOS, realme UI, One UI, Samsung, Xiaomi, OPPO, realme) are
-trademarks of their owners, used here solely for identification under nominative fair use.
+Apache-2.0. See [LICENSE](LICENSE) and read [LEGAL.md](LEGAL.md) before contributing.
